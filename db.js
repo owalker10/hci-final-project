@@ -14,7 +14,7 @@ module.exports = {
         return callback(err);
       }
 
-      dbConnection = db.db(process.env.NODE_ENV === 'dev' ? 'development' : production);
+      dbConnection = db.db(process.env.NODE_ENV === 'dev' ? 'development' : 'production');
       console.log('Successfully connected to MongoDB.');
 
       return callback();
