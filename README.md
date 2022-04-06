@@ -5,6 +5,15 @@
 - make sure you have a .env file with the right content
 - to run the development server: ```npm run dev```
 
+## Deploy to Heroku
+### First time set-up
+- [install the Heroku CLI tool](https://devcenter.heroku.com/articles/heroku-cli)
+- ```heroku login```
+### Deploy a change
+- make sure your code works when you run ```npm start```
+- commit your changes
+- ```git push heroku main```
+
 ## Structure
 ### /public
 where JS scripts, CSS stylesheets, and assets (images, etc.) live
