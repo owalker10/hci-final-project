@@ -1,0 +1,76 @@
+<style type="text/css">
+    .chip {
+        border-radius: 100px;
+        display: inline-flex;
+        border: 1px solid black;
+        padding: 6px 13px;
+        font-size: 13px;
+        font-weight: 600;
+
+    }
+    .chip.borrow {
+        border-color: var(--borrow-color);
+        color: var(--borrow-color);
+        fill: var(--borrow-color);
+        background-color: var(--borrow-chip-color);
+    }
+    .chip.keep {
+        border-color: var(--keep-color);
+        color: var(--keep-color);
+        fill: var(--keep-color);
+        background-color: var(--keep-chip-color);
+    }
+    .chip.giveaway {
+        border-color: var(--giveaway-color);
+        color: var(--giveaway-color);
+        fill: var(--giveaway-color);
+        background-color: var(--giveaway-chip-color);
+    }
+    .chip.favor {
+        border-color: var(--favor-color);
+        color: var(--favor-color);
+        fill: var(--favor-color);
+        background-color: var(--favor-chip-color);
+    }
+    .chip.time {
+        border-color: var(--time-color);
+        color: var(--time-color);
+        fill: var(--time-color);
+        background-color: var(--time-chip-color);
+    }
+    .chip svg {
+        height: 16px;
+        width: auto;
+        margin-right: 8px;
+    }
+    .chip.unselected {
+        background: none;
+        border-color: var(--unselected-chip-color);
+    }
+</style>
+
+<% const getText = () => {
+    if (category !== 'time') return text;
+    const time = text;
+    if (time === 'ASAP' || time === 'anytime') return time;
+    else {
+        const daysAway = (time - Date.now())/(1000 * 3600 * 24)
+        if (daysAway < 1) {
+            return "today"
+        }
+        else if (daysAway > 7){
+            return `by ${$.datepicker.formatDate('M d')}`
+        }
+        else return `by ${$.datepicker.formatDate('DD')}`
+    }
+} %> 
+
+<div class="chip <%-category%> <%- locals.unselected ? 'unselected' : '' %>">
+    <!-- icon -->
+    <%- category == 'keep' || category == 'borrow' ? include('../svg/borrow')
+    : category == 'giveaway' ? include('../svg/giveaway')
+    : category == 'favor' ? include('../svg/favor')
+    : include('../svg/time') %>
+    <%- getText() %>
+
+</div>

@@ -1,6 +1,52 @@
+:root {
+  /* main colors */
+  --primary: #ED6486;
+  --secondary:#5F5DC8 ;
+  --grey: #E9E5E6;
+  
+  --text-primary: #DA4167;
+  --text-dark: #262225;
+  --text-grey: #B0ADAE;
+
+  /* chip colors */
+  --keep-color: #488DDF;
+  --keep-chip-color: rgba(72, 141, 223, 0.1);
+  --borrow-color: #31B7BF;
+  --borrow-chip-color: rgba(49, 183, 191, 0.1);
+  --giveaway-color: #1A9569;
+  --giveaway-chip-color: rgba(26, 149, 105, 0.1);
+  --favor-color: #D25FB9;
+  --favor-chip-color: rgba(210, 95, 185, 0.1);
+  --time-color: #B0ADAE;
+  --time-chip-color: rgba(176, 173, 174, 0.15);
+  --unselected-chip-color: rgba(176, 173, 174, 0.47);
+
+  /* shadows */
+  --shadow-btn: 1px 2px 7px rgba(0, 0, 0, 0.11), 0.5px 1px 2.5px rgba(0, 0, 0, 0.18);
+  --shadow-btn-active: 0.5px 1px 2px rgba(0, 0, 0, 0.3);
+
+}
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url(../fonts/BrandonGrotesque-Regular.woff2) format('woff2');
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url(../fonts/BrandonGrotesque-Light.woff2) format('woff2');
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Brandon Grotesque";
+  src: url(../fonts/BrandonGrotesque-Bold.woff2) format('woff2');
+  font-weight: 600;
+}
+
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Source Sans Pro", sans-serif;
+  color: var(--text-dark);
+  max-width: 100vw;
 }
 
 a {

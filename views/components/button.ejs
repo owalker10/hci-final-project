@@ -1,0 +1,66 @@
+<style>
+    .button {
+        border: none;
+        font-size: 24px;
+        font-weight: 600;
+        padding: 12px 32px;
+        border-radius: 5px;
+        -webkit-transition: all .1s ease;
+        transition: all .1s ease;
+    }
+    .button.disabled {
+        pointer-events: none;
+        cursor: default;
+    }
+    .button.primary {
+        background-color: var(--secondary);
+        color: white;
+        box-shadow: var(--shadow-btn);
+    }
+    .button.primary.disabled {
+        background-color: #CFCDCE;
+        box-shadow: none;
+    }
+    .button.secondary {
+        color: var(--text-primary);
+        background: none;
+    }
+    .button.secondary.disabled {
+        color: var(--grey);
+    }
+    .button.grey {
+        color: var(--text-grey);
+        background: none;
+    }
+    .button.small {
+        font-size: 16px;
+        padding: 8px 16px;
+        border-radius: 3px;
+    }
+    .button.primary:hover {
+        filter: brightness(90%);
+        -webkit-filter: brightness(90%);
+    }
+    .button.primary:active {
+        transform: translateY(2px);
+        box-shadow: var(--shadow-btn-active);
+    }
+    .button.secondary:hover {
+        background-color: rgba(237, 100, 134, 0.10);
+    }
+    .button.secondary:active {
+        background-color: rgba(237, 100, 134, 0.20);
+
+    }
+    .button.grey:hover {
+        background-color: rgba(176, 173, 174, 0.1);
+    }
+    .button.grey:active {
+        background-color: rgba(176, 173, 174, 0.2);
+
+    }
+</style>
+
+<button class="button <%- size %> <%- type %> <%- locals.disabled ? "disabled" : "" %>  ">
+    <%- text %> 
+</button>

@@ -1,0 +1,42 @@
+ <style>
+    .post-card {
+        background-color: white;
+        border: 1px solid rgba(0, 0, 0, 0.04);
+        box-shadow: 2px 4px 13px rgba(0, 0, 0, 0.06), 1px 2px 5px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        cursor: pointer;
+        padding: 16px 24px;
+        border-radius: 10px;
+    }
+    .post-card h4 {
+        font-family: "Brandon Grotesque", sans-serif;
+        font-size: 24px;
+        margin: 0;
+    }
+    .post-card .name {
+        color: var(--text-grey);
+        font-size: 14px;
+    }
+    .post-card .points {
+        color: var(--text-primary);
+        font-size: 14px;
+        font-weight: 600;
+    }
+    .post-card .chip {
+        margin-right: 4px;
+    }
+ </style>
+
+
+ <div class="post-card">
+    <h4><%- title %> </h4>
+    <div class="d-flex justify-content-between">
+        <span class="name"><%- name %></span>
+        <span class="points"><%- `${points > 0 ? '+' : ''}${points} points` %></span>
+    </div>
+    <div class="d-flex flex-wrap mt-2">
+        <%- include('./chip', {category: category, text: category}); %>
+        <%- include('./chip', {category: 'time', text: need_by}); %>
+    </div>
+ </div>

@@ -10,7 +10,9 @@ var webRouter = require('./routes/web');
 var apiRouter = require('./routes/api');
 
 const dbService = require('./db.js');
-dbService.connectToServer(console.error)
+dbService.connectToServer(err => {
+  if (err) console.error(err)
+})
 
 var app = express();
 
