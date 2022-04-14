@@ -1,0 +1,25 @@
+<style type="text/css">
+    #drawer {
+        height: 75vh;
+        border-top-left-radius: 16px;
+        border-top-right-radius: 16px;
+        padding: 24px 32px 0;
+    }
+    #drawer .btn-close {
+        margin-right: -8px;
+        opacity: .2;
+    }
+    #drawer .button {
+        position: absolute;
+        bottom: 24px;
+        right: 32px;
+    }
+</style>
+
+<div class="offcanvas offcanvas-bottom" tabindex="-1" id="drawer">
+    <div class="d-flex justify-content-between align-items-baseline">
+        <h3>New Post</h3>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <%- include('./button', { type: 'primary', size: 'large', text: 'post'}) %> 
+  </div>

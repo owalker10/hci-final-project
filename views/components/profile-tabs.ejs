@@ -1,0 +1,54 @@
+<style type="text/css">
+    .tab-container {
+        background-color: white;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: relative;
+    }
+    .tab {
+        width: 150px;
+        text-align: center;
+        font-size: 18px;
+        color: var(--text-grey);
+        font-weight: 600;
+        padding: 8px 0;
+        transition: all .3s ease;
+    }
+    .tab.active {
+        color: var(--primary);
+    }
+    .line {
+        position: absolute;
+        height: 2px;
+        width: 150px;
+        bottom: 0;
+        left: calc(50vw - 150px);
+        transition: all .3s ease;
+        padding: 0 8px;
+        display: flex;
+    }
+    .line::before {
+        content: "";
+        background-color: var(--primary);
+        width: 100%;
+    }
+    #history.active + .line {
+        left: 50vw;
+    }
+</style>
+
+<div class="tab-container">
+    <div class="tab active" id="active-posts">Active Posts</div>
+    <div class="tab" id="history">History</div>
+    <div class="line"></div>
+</div>
+
+<script>
+    $(".tab").click(event => {
+        $('.tab').removeClass('active')
+        console.log(event.currentTarget)
+        $(event.currentTarget).addClass('active')
+        $('#tab-content').attr({ 'data-tab': event.currentTarget.id })
+    })
+</script>

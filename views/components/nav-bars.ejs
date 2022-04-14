@@ -1,0 +1,110 @@
+<style type="text/css">
+    .header {
+        position: absolute;
+        top: 0;
+        height: 70px;
+        width: 100%;
+        background-color: white;
+        border-bottom: 1px solid #EBEBEB;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .header h1 {
+        font-family: "Brandon Grotesque", sans-serif;
+        font-size: 28px;
+        font-weight: 200;
+        margin: 0;
+    }
+    .header h2 {
+        font-size: 18px;
+        color: var(--text-grey);
+        margin: 0;
+    }
+    #settings {
+        position: absolute;
+        display: <%- title === "App Name" || title === "My Profile" ? "flex" : "none" %>;
+        height: 100%;
+        align-items: center;
+        right: 0;
+    }
+    #settings svg {
+        height: 30px;
+        fill: var(--grey);
+    }
+    .nav {
+        position: absolute;
+        bottom: -1px;
+        width: 100vw;
+        display: flex;
+        justify-content: space-between;
+        height: 85px;
+        align-items: center;
+    }
+    .nav .bar {
+        position: absolute;
+        bottom: 0;
+        margin-left: 50%;
+        transform: translateX(-50%);
+        z-index: -1;
+    }
+    .nav .new-button {
+        position: absolute;
+        bottom: 49px;
+        width: 78px;
+        height: 78px;
+        background-color: var(--primary);
+        border-radius: 100%;
+        margin: auto;
+        left: 0;
+        right: 0;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+        border: none;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .nav .nav-btn {
+        padding: 16px;
+        fill: var(--grey);
+    }
+    .nav .nav-btn svg {
+        height: 48px;
+        width: auto;
+        
+    }
+    .nav #home-btn {
+        margin-left: 48px;
+        <%- page === 'home' ? 'fill: var(--primary)' : ''%>
+    }
+    .nav #profile-btn {
+        margin-right: 48px;
+        <%- page === 'profile' ? 'fill: var(--primary)' : ''%>
+    }
+</style>
+
+<div class="header">
+    <h1><%- title %> </h1>
+    <h2>Jester West</h2>
+    <div id="settings">
+        <%- include('../svg/gear') %> 
+    </div>
+</div>
+<div style="height: 70px"></div>
+
+<div class="nav">
+    <div class="bar">
+        <img src="images/bar.svg">
+    </div>
+    <button class="new-button" data-bs-toggle="offcanvas" data-bs-target="#drawer"><%- include('../svg/plus') %> </button>
+    <a class="nav-btn" id="home-btn" href="/">
+        <%- include('../svg/home.ejs') %>
+    </a>
+    <a class="nav-btn" id="profile-btn" href="/profile">
+        <%- include('../svg/user.ejs') %>
+    </a>
+</div>
+
+<%- include('./new-post') %> 

@@ -3,12 +3,16 @@ var router = express.Router();
 
 // Renders the homepage
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('pages/index');
+});
+
+router.get('/profile', function(req, res, next) {
+  res.render('pages/profile');
 });
 
 // Renders the "example" page
 router.get('/example', function(req, res, next) {
-  res.render('example', { title: 'Example' });
+  res.render('pages/example');
 });
 
 module.exports = router;
