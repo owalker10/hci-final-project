@@ -15,29 +15,82 @@
     .auto .menu {
         font-family: inherit;
         display: none;
+        border: 1px solid var(--divider);
+        box-shadow: var(--shadow-card);
     }
-    /* only show the dropdown menu when the text input is focused and we have specific to show the menu with the .show class */
+    .auto .menu .item {
+        padding: 4px;
+        border-bottom: 1px solid var(--divider);
+        align-items: center;
+    }
+    .auto .menu .item.hide {
+        display: none;
+    }
+    .auto .menu .suggestion {
+        cursor: pointer;
+        display: flex;
+    }
+    .auto .menu .suggestion img {
+        border-radius: 100%;
+        width: 24px;
+        height: 24px;
+        margin-right: 4px;    
+        padding: 0;    
+    }
+    /* only show the dropdown menu when the text input is focused and we have specified to show the menu with the .show class */
     .auto input:focus ~ .menu.show {
         display: block;
     }
 
 </style>
 
+<!-- autocomplete element specifically for the name input in the Confirm Fulfillment dialogue -->
 <div id="<%- id %>" class="auto">
 <input>
 <ul class="menu">
-    <% for (item of options) { %>
-        <li><div><%= item %></div></li>
+    <% for ({ name, url } of options) { %>
+        <li class="suggestion item">
+            <img src="<%= url %>">
+            <div class="name"><%= name %></div>
+        </li>
     <% } %>
+    <li class="item"><div>No results.</div></li>
 </ul>
 </div>
 
-<!-- jquery ui menu -->
 <script>
+    // jquery ui menu
     const id = "<%- id %>";
+    const options = <%- JSON.stringify(options) %>;
     $(`#${id} .menu`).menu({
         classes: {
-            "ui-menu": "menu"
+            "ui-menu": "menu",
+            "ui-menu-item": "item",
         }
     });
+    // show certain elements of the dropdown menu if they match the text in the input field
+    $(`#${id} input`).on('input focus',function (e) {
+        const q = $(this).val()
+        if (q === '') {
+            $(`#${id} .menu`).removeClass('show')
+            return
+        }
+        $(`#${id} .menu`).addClass('show')
+
+        const regex = new RegExp(`\\b${q}`, 'i');
+        const menuItems = $(`#${id} .menu`).children();
+        menuItems.removeClass('hide');
+        let results = false;
+        for (let i = 0; i < options.length; i++){
+            const name = options[i].name;
+            if (!regex.exec(name)) $(menuItems[i]).addClass('hide')
+            else results = true;
+        }
+        if (results) menuItems.last().addClass('hide');
+        $(`#${id} .suggestion`).click(function (e){
+            $(`#${id} input`).val($(this).children('.name').text())
+            $(`#${id} input`).blur()
+        })
+    })
+
 </script>

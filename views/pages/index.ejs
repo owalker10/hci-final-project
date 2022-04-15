@@ -15,8 +15,9 @@
     <%- include('../components/button', {type:'primary',size:'small',text:'open page',id:'press-me'}); %>
     <!-- request-details should slide open when someone clicks on a post card -->
     <div id="request-details" class="slide"></div>
+    
     <script>
-      $('#press-me').click(() => {
+            $('#press-me').click(() => {
         $.post('/test', data => {
           $('#request-details').html(data)
           openSlide();

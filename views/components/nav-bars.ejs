@@ -125,6 +125,7 @@
 </div>
 
 <%- include('./new-post') %> 
+<%- include('../components/tutorial') %>
 
 <script>
     const openSlide = () => {
@@ -138,4 +139,15 @@
     $('#back').click(() => {
         closeSlide();
     })
+    $('#settings').click(() => {
+        tutorialModal.show()
+    })
+
+    window.onload = () => {
+        const tutorial = localStorage.getItem('tutorial-played');
+        if (!tutorial){
+          tutorialModal.show()
+          localStorage.setItem('tutorial-played',1)
+        }
+      }
 </script>

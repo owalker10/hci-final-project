@@ -1,0 +1,196 @@
+<style>
+    #tutorial {
+
+    }
+    #tutorial .modal-footer {
+        justify-content: space-between;
+    }
+    #tutorial .modal-footer button {
+        z-index: 100;
+    }
+    #tutorial-next {
+        margin-left: auto;
+    }
+    #tutorial-back {
+        display: none;
+    }
+    #tutorial-go {
+        display: none;
+        margin-left: auto;
+    }
+    #tutorial .modal-header, #tutorial .modal-footer {
+        border: none!important;
+    }
+    #tutorial .modal-header h5:not(.selected) {
+        display: none;
+    }
+    #tutorial .btn-close {
+        opacity: .2;
+    }
+    #tutorial .modal-body {
+        overflow: hidden;
+        margin: 1rem;
+        padding: 0;
+    }
+    #tutorial .content-container {
+        position: relative;
+        display: flex;
+        right: 0%;
+        transition: all .3s ease;
+    }
+    #tutorial .content {
+        flex-shrink: 0;
+        width: 100%;
+        font-size: 16px;
+    }
+    #tutorial .content li:not(:last-child) {
+        margin-bottom: 8px;
+    }
+    /* #tutorial .content:not(.selected){
+        display: none;
+    } */
+    #tutorial .page {
+        display: flex;
+        position: absolute;
+        width: 100%;
+        justify-content: center;
+        left: 0;
+        margin: 0;
+    }
+    #tutorial .dot {
+        width: 8px;
+        height: 8px;
+        background-color: var(--grey);
+        border-radius: 100%;
+    }
+    #tutorial .dot:not(:last-child) {
+        margin-right: 8px;
+    }
+    #tutorial .dot.selected {
+        background-color: var(--text-grey);
+    }
+
+
+</style>
+
+<div class="modal fade" id="tutorial" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title selected">Welcome to App Name!</h5>
+          <h5 class="modal-title">Borrow Requests</h5>
+          <h5 class="modal-title">Keep Requests</h5>
+          <h5 class="modal-title">Favor Requests</h5>
+          <h5 class="modal-title">Giveaway Requests</h5>
+          <h5 class="modal-title selected">Welcome to App Name!</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="content-container">
+                <div class="content selected">
+                    <p>[App name] helps you connect with other people in your dorm to borrow items, give things away, and request favors.</p>
+                    <p>You can earn <span style="font-weight:600;color:var(--text-primary);">points</span> by helping people out, and spend those points to create requests.</p>
+                    <p>There are <span style="font-weight: 600">four</span> categories of requests...</p>
+                </div>
+                <div class="content">
+                    <%- include('./chip', {category:'borrow',text:'borrow'}) %> 
+                    <p class="mt-3">Borrow requests are for items that need to be returned (ex: scissors).</p>
+                    <ul>
+                        <li>Making a borrow request requires points</li>
+                        <li>You earn points when you fulfill someone else’s borrow request</li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <%- include('./chip', {category:'keep',text:'keep'}) %> 
+                    <p class="mt-3">Keep requests are for items that won’t be returned (ex: AA batteries).</p>
+                    <ul>
+                        <li>Making a keep request requires points</li>
+                        <li>You earn points when you fulfill someone else’s keep request</li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <%- include('./chip', {category:'favor',text:'favor'}) %> 
+                    <p class="mt-3">Favor requests are for services (ex: using someone’s printer).</p>
+                    <ul>
+                        <li>Making a favor request requires points</li>
+                        <li>You earn points when you fulfill someone else’s favor request</li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <%- include('./chip', {category:'giveaway',text:'giveaway'}) %> 
+                    <p class="mt-3">Giveaway requests are a little different. They're for items that a user wants to give away (ex: extra cookies).</p>
+                    <ul>
+                        <li>You earn points when someone uses your giveaway request</li>
+                        <li>You spend points to take items from someone else’s giveaway</li>
+                    </ul>
+                </div>
+                <div class="content">
+                    <p>To make a request post, tap the plus button in the bottom bar.</p>
+                    <p>If you ever want to view this tutorial again, tap the gear icon in the top bar of the app.</p>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <%- include('./button', { size: 'small', type: 'grey', text: 'back', id:'tutorial-back'}) %>
+          <div class="page">
+          </div>
+          <%- include('./button', { size: 'small', type: 'secondary', text: 'next', id:'tutorial-next'}) %>
+          <%- include('./button', { size: 'small', type: 'secondary', text: "got it!", id:'tutorial-go'}) %>
+        </div>
+      </div>
+    </div>
+</div>
+
+<script>
+    var tutorialModal = new bootstrap.Modal($('#tutorial')[0])
+
+    $('#tutorial').on('show.bs.modal', () => {
+        changePage(0)
+
+        const container = $('#tutorial .page')
+        if ($('#tutorial .dot').length > 0) return;
+        for (let i = 0; i < $('#tutorial .modal-title').length; i++){
+            const dot = $('<div>').addClass('dot')
+            if (i === 0) dot.addClass('selected')
+            container.append(dot)
+        }
+    })
+
+    const nPages = $('#tutorial .modal-title').length;
+    var tutorialPage = 0;
+    const changePage = (n) => {
+        tutorialPage = n;
+        // change page indicator dots
+        $('#tutorial .dot').removeClass('selected')
+        $(`#tutorial .dot:nth-child(${tutorialPage+1})`).addClass('selected')
+        // toggle headers
+        $('#tutorial .modal-title').removeClass('selected')
+        $(`#tutorial .modal-title:nth-child(${tutorialPage+1})`).addClass('selected')
+        // slide content
+        $('#tutorial .content-container').css({right: `${tutorialPage*100}%`})
+        // toggle buttons
+        if (tutorialPage === 0){
+            $('#tutorial-back').css({display:'none'})
+        }
+        else {
+            $('#tutorial-back').css({display:'block'})
+        }
+        if (tutorialPage === nPages-1){
+            $('#tutorial-next').css({display:'none'})
+            $('#tutorial-go').css({display:'block'})
+        }
+        else {
+            $('#tutorial-next').css({display:'block'})
+            $('#tutorial-go').css({display:'none'})
+        }
+    }
+    $('#tutorial-next').click(function(){
+        changePage(tutorialPage+1);
+    })
+    $('#tutorial-back').click(function(){
+        changePage(tutorialPage-1);
+    })
+    $('#tutorial-go').click(function(){
+        tutorialModal.hide()
+    })
+</script>

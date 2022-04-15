@@ -8,6 +8,8 @@
   --text-dark: #262225;
   --text-grey: #B0ADAE;
 
+  --divider: rgba(0, 0, 0, 0.06);
+
   /* chip colors */
   --keep-color: #488DDF;
   --keep-chip-color: rgba(72, 141, 223, 0.1);
@@ -24,6 +26,8 @@
   /* shadows */
   --shadow-btn: 1px 2px 7px rgba(0, 0, 0, 0.11), 0.5px 1px 2.5px rgba(0, 0, 0, 0.18);
   --shadow-btn-active: 0.5px 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-card: 2px 4px 13px rgba(0, 0, 0, 0.06), 1px 2px 5px rgba(0, 0, 0, 0.1);
+
 
   --header-height: 70px;
 

@@ -19,6 +19,14 @@
     <div style="max-width: 350px">
       <%- include('../components/post-card', {title: 'Back massage', category: 'favor', need_by: Date.now(), name: 'Jane Doe', points: 10}) %> 
     </div>
-    <%- include('../components/autocomplete',{ id:'test-auto', options: ['foo','bar','baz']})  %> 
+    <%- include('../components/autocomplete',{ id:'test-auto', options: [
+      { name: 'John Smith', url: 'https://randomuser.me/api/portraits/lego/1.jpg'},
+      { name: 'Bob Smith', url: 'https://randomuser.me/api/portraits/lego/1.jpg'},
+      { name: 'Jane Doe', url: 'https://randomuser.me/api/portraits/lego/1.jpg'},
+    ]})  %> 
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#tutorial">
+      Launch demo modal
+    </button>
+    <%- include('../components/tutorial') %>
   </body>
 </html>
