@@ -1,0 +1,43 @@
+<style>
+    .auto input {
+        border-radius: 8px;
+        border: 1px solid var(--grey);
+        outline: none!important;
+        transition: all .1s ease;
+        margin: 1px;
+        padding: 6px 12px;
+    }
+    .auto input:focus-visible {
+        border-color: var(--primary);
+        border-width: 2px;
+        margin: 0px;
+    }
+    .auto .menu {
+        font-family: inherit;
+        display: none;
+    }
+    /* only show the dropdown menu when the text input is focused and we have specific to show the menu with the .show class */
+    .auto input:focus ~ .menu.show {
+        display: block;
+    }
+
+</style>
+
+<div id="<%- id %>" class="auto">
+<input>
+<ul class="menu">
+    <% for (item of options) { %>
+        <li><div><%= item %></div></li>
+    <% } %>
+</ul>
+</div>
+
+<!-- jquery ui menu -->
+<script>
+    const id = "<%- id %>";
+    $(`#${id} .menu`).menu({
+        classes: {
+            "ui-menu": "menu"
+        }
+    });
+</script>

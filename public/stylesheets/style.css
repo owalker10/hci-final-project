@@ -25,6 +25,8 @@
   --shadow-btn: 1px 2px 7px rgba(0, 0, 0, 0.11), 0.5px 1px 2.5px rgba(0, 0, 0, 0.18);
   --shadow-btn-active: 0.5px 1px 2px rgba(0, 0, 0, 0.3);
 
+  --header-height: 70px;
+
 }
 @font-face {
   font-family: "Brandon Grotesque";
@@ -47,8 +49,23 @@ body {
   color: var(--text-dark);
   max-width: 100vw;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 a {
   color: #00B7FF;
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: white;
+  left: 100vw;
+  transition: all .3s ease;
+  padding-top: var(--header-height);
+}
+.slide.in {
+  left: 0;
 }

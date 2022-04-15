@@ -6,10 +6,26 @@
       body {
         background-color: #F3F3F3;
       }
+      
     </style>
+    
   </head>
   <body>
     <%- include('../components/nav-bars', {page:'home',title:'App Name'}); %>
-    
+    <%- include('../components/button', {type:'primary',size:'small',text:'open page',id:'press-me'}); %>
+    <!-- request-details should slide open when someone clicks on a post card -->
+    <div id="request-details" class="slide"></div>
+    <script>
+      $('#press-me').click(() => {
+        $.post('/test', data => {
+          $('#request-details').html(data)
+          openSlide();
+          $('#test').click(() => {
+            closeSlide();
+          })
+        })
+      })
+      const foo = 2;
+    </script>
   </body>
 </html>

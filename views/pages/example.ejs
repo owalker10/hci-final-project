@@ -4,8 +4,6 @@
     <%- include('../components/head'); %>
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Here is <%= title %></p>
     <div class="d-flex flex-wrap align-items-center">
       <%- include('../components/chip', {category: 'borrow', text: 'borrow', id: 'test1'}); %>
       <%- include('../components/chip', {category: 'keep', text: 'keep', id: 'test2'}); %>
@@ -21,5 +19,6 @@
     <div style="max-width: 350px">
       <%- include('../components/post-card', {title: 'Back massage', category: 'favor', need_by: Date.now(), name: 'Jane Doe', points: 10}) %> 
     </div>
+    <%- include('../components/autocomplete',{ id:'test-auto', options: ['foo','bar','baz']})  %> 
   </body>
 </html>

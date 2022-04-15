@@ -2,7 +2,7 @@
     .header {
         position: absolute;
         top: 0;
-        height: 70px;
+        height: var(--header-height);
         width: 100%;
         background-color: white;
         border-bottom: 1px solid #EBEBEB;
@@ -22,6 +22,17 @@
         color: var(--text-grey);
         margin: 0;
     }
+    #back {
+        position: absolute;
+        display: none;
+        height: 100%;
+        align-items: center;
+        left: 0;
+        padding-left: 16px;
+    }
+    #back.visible {
+        display: flex;
+    }
     #settings {
         position: absolute;
         display: <%- title === "App Name" || title === "My Profile" ? "flex" : "none" %>;
@@ -29,7 +40,7 @@
         align-items: center;
         right: 0;
     }
-    #settings svg {
+    #settings svg, #back svg {
         height: 30px;
         fill: var(--grey);
     }
@@ -83,16 +94,22 @@
         margin-right: 48px;
         <%- page === 'profile' ? 'fill: var(--primary)' : ''%>
     }
+    .nav, .header {
+        z-index: 5;
+    }
 </style>
 
 <div class="header">
     <h1><%- title %> </h1>
     <h2>Jester West</h2>
+    <div id="back">
+        <%- include('../svg/back') %> 
+    </div>
     <div id="settings">
         <%- include('../svg/gear') %> 
     </div>
 </div>
-<div style="height: 70px"></div>
+<div style="height: var(--header-height)"></div>
 
 <div class="nav">
     <div class="bar">
@@ -108,3 +125,17 @@
 </div>
 
 <%- include('./new-post') %> 
+
+<script>
+    const openSlide = () => {
+        $('.slide').addClass('in');
+        $('#back').addClass('visible');
+    }
+    const closeSlide = () => {
+        $('.slide').removeClass('in');
+        $('#back').removeClass('visible');
+    }
+    $('#back').click(() => {
+        closeSlide();
+    })
+</script>
