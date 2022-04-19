@@ -6,6 +6,10 @@ var logger = require('morgan');
 
 require('dotenv').config()
 
+var session = require('express-session')
+
+var dayjs = require('dayjs')
+
 var webRouter = require('./routes/web');
 var apiRouter = require('./routes/api');
 
@@ -27,9 +31,20 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: 'not important', // this is all fake data in a non-sensitive environment
+  resave: false,
+  saveUninitialized: true
+}))
+
+app.locals.dayjs = dayjs;
+
+
 
 app.use('/', webRouter);
 app.use('/api', apiRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

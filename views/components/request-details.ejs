@@ -1,0 +1,55 @@
+<style>
+    .details {
+        padding: 48px 36px;
+    }
+    .details h3 {
+        font-size: 38px;
+        font-family: "Brandon Grotesque", sans-serif;
+        font-weight: 300;
+    }
+    .details img {
+        height: 40px;
+        border: 1px solid var(--primary);
+        margin-right: 10px;
+        border-radius: 100%;
+    }
+    .details .user {
+        color: var(--text-grey);
+        font-size: 16px;
+        margin-bottom: 13px;
+    }
+    .details .points {
+        color: var(--text-primary);
+        font-size: 15px;
+        margin-bottom: 15px;
+    }
+    .details .points span {
+        font-weight: 600;
+    }
+    .details .chips div:first-of-type {
+        margin-right: 5px!important;
+    }
+    .details hr {
+        border-color: var(--divider);
+        opacity: 0.06;
+        margin: 24px -8px;
+    }
+    .details .description {
+        font-size: 18px;
+    }
+</style>
+
+<div class="details">
+    <h3><%- title %> </h3>
+    <div class="points"><span><%- `${points > 0 ? '+' : ''}${points}`%> points</span> for fulfilling</div>
+    <div class="user">
+        <img src="<%- image %>">
+        <span><%- name %></span>
+    </div>
+    <div class="d-flex flex-wrap mt-2 chips">
+        <%- include('./chip', {category, text: category}); %>
+        <%- include('./chip', {category: 'time', text: need_by}); %>
+    </div>
+    <hr>
+    <div class="description"><%- description %> </div>
+</div>

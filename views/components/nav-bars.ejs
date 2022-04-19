@@ -22,8 +22,9 @@
         color: var(--text-grey);
         margin: 0;
     }
+    /* logo */
     .header > svg {
-        height: 30px;
+        height: 24px;
         margin-bottom: 8px;
     }
     #back {
@@ -54,7 +55,7 @@
         width: 100vw;
         display: flex;
         justify-content: space-between;
-        height: 68px;
+        height: var(--nav-height);
         align-items: center;
     }
     .nav .bar {
@@ -85,6 +86,9 @@
         justify-content: center;
         align-items: center;
     }
+    .nav .new-button svg {
+        height: 28px;
+    }
     .nav .nav-btn {
         padding: 16px;
         fill: var(--grey);
@@ -92,7 +96,6 @@
     .nav .nav-btn svg {
         height: 32px;
         width: auto;
-        
     }
     .nav #home-btn {
         margin-left: 48px;
@@ -121,7 +124,6 @@
         <%- include('../svg/gear') %> 
     </div>
 </div>
-<div style="height: var(--header-height)"></div>
 
 <div class="nav">
     <div class="bar">

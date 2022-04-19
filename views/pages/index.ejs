@@ -1,3 +1,9 @@
+<% 
+const getFieldFromUser = (field,username) => {
+ return users.find(user => user.username === username)[field]
+}
+%> 
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,18 +12,40 @@
       body {
         background-color: #F3F3F3;
       }
-      
+      .feed {
+        padding: 32px 24px 0; 
+      }
+      .post-list {
+        display: grid;
+        row-gap: 16px;
+      }
+      .feed h3 {
+        font-weight: 300;
+        font-family: "Brandon Grotesque", sans-serif;
+        color: #26222578;
+        font-size: 26px;
+        margin-bottom: 1rem;
+      }
     </style>
-    
   </head>
   <body>
     <%- include('../components/nav-bars', {page:'home',title:'ZipShare'}); %>
-    <%- include('../components/button', {type:'primary',size:'small',text:'open page',id:'press-me'}); %>
+    <div class="content-container">
+      <div class="feed">
+        <h3>Active Posts</h3>
+        <div class="post-list">
+          <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
+            <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser('name',username), points, id }) %> 
+          <% }) %>
+        </div>
+      </div>
+      
+      <%- include('../components/button', {type:'primary',size:'small',text:'open page',id:'press-me'}); %>
+  </div>
     <!-- request-details should slide open when someone clicks on a post card -->
     <div id="request-details" class="slide"></div>
-    
     <script>
-            $('#press-me').click(() => {
+      $('#press-me').click(() => {
         $.post('/test', data => {
           $('#request-details').html(data)
           openSlide();
@@ -26,7 +54,13 @@
           })
         })
       })
-      const foo = 2;
+
+      $('.post-card').click(function() {
+        $.post('/request-details', { id: $(this).attr('data-post-id') } ,data => {
+          $('#request-details').html(data)
+          openSlide();
+        })
+      })
     </script>
   </body>
 </html>
