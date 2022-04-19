@@ -17,6 +17,7 @@ const parseUsername = (req, res, next) => {
   }
   // otherwise use the default username
   else if (!req.session.username) req.session.username = default_user;
+  res.locals.currentUser = req.session.username
   next()
 }
 router.use(parseUsername)
