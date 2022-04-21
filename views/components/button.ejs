@@ -2,7 +2,7 @@
 <style type="text/css">
     .button {
         border: none;
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 600;
         padding: 12px 32px;
         border-radius: 5px;
@@ -34,7 +34,7 @@
         background: none;
     }
     .button.small {
-        font-size: 16px;
+        font-size: 14px;
         padding: 8px 16px;
         border-radius: 3px;
     }
@@ -76,7 +76,7 @@
 }
 </style>
 
-<button <%- locals.id ? `id="${locals.id}"` : '' %>  class="button <%- size %> <%- type %> <%- locals.disabled ? "disabled" : "" %>  ">
+<button <%- locals.id ? `id="${locals.id}"` : '' %>  class="button <%- size %> <%- type %> <%- locals.disabled ? "disabled" : "" %>">
     <img class="spinner" src="images/spinner.png">
     <%- text %> 
 </button>

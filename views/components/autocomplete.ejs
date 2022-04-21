@@ -1,6 +1,6 @@
 <style>
     .auto input {
-        border-radius: 8px;
+        border-radius: 6px;
         border: 1px solid var(--grey);
         outline: none!important;
         transition: all .1s ease;
@@ -17,6 +17,7 @@
         display: none;
         border: 1px solid var(--divider);
         box-shadow: var(--shadow-card);
+        position: absolute;
     }
     .auto .menu .item {
         padding: 4px;
@@ -50,7 +51,7 @@
 <ul class="menu">
     <% for ({ name, url } of options) { %>
         <li class="suggestion item">
-            <img src="<%= url %>">
+            <img src="<%= image %>">
             <div class="name"><%= name %></div>
         </li>
     <% } %>

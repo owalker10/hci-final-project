@@ -1,6 +1,8 @@
 <style>
     .details {
         padding: 48px 36px;
+        max-height: 100%;
+        overflow-y: scroll;
     }
     .details h3 {
         font-size: 38px;
@@ -35,9 +37,61 @@
         margin: 24px -8px;
     }
     .details .description {
+        font-size: 14px;
+    }
+    .details .contact {
+        margin-top: 48px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .details .reminder {
+        color: var(--text-grey);
+        font-size: 14px;
+        text-align: center;
+        font-weight: 300;
+        width: 80%;
+    }
+    .details .actions {
+        margin-top: -24px;
+    }
+    .details .action {
+        color: var(--text-grey);
+        padding: 18px 12px;
         font-size: 18px;
+        margin-left: 12px;
+        border-bottom: 1px solid var(--divider);
+    }
+    .details #confirm {
+        color: var(--text-primary);
+    }
+    .details .actions svg {
+        fill: currentColor;
+        height: 1em;
+        width: 1em;
+        margin-right: 1ch;
+    }
+
+    /* confirm modal */
+
+    #confirmModal .modal-header, #confirmModal .modal-footer {
+        border: none!important;
+    }
+    #confirmModal .btn-close {
+        opacity: .2;
+    }
+    #confirmModal .label {
+        margin-bottom: 4px;
+        display: block;
+    }
+    #confirmModal .modal-body {
+        display: flex;
+        flex-direction: column;
+        row-gap: 16px;
     }
 </style>
+
+<% const firstName = name.split(' ')[0]; %> 
 
 <div class="details">
     <h3><%- title %> </h3>
@@ -52,4 +106,77 @@
     </div>
     <hr>
     <div class="description"><%- description %> </div>
+    <% if (locals.currentUser !== username) { %> 
+        <div class="contact">
+            <a href="sms:5555555555">
+                <%- include('./button', { size: 'large', type: 'primary', text: `contact ${firstName}`}) %>
+            </a> 
+            <div class="reminder mt-3">
+                When you meet, make sure <%- firstName %>  takes a photo and confirms the request fulfillment
+            </div>
+        </div>
+    <% } else { %>
+        <hr>
+    <div class="actions">
+        <div class="action" id="confirm" data-bs-toggle="modal" data-bs-target="#confirmModal">
+            <%- include('../svg/check') %> 
+            Confirm fullfilment
+        </div>
+        <div class="action" id="edit" data-bs-toggle="tooltip" title="Editing is not available in this demo">
+            <%- include('../svg/pencil') %> 
+            Edit
+        </div>
+        <div class="action" id="delete">
+            <%- include('../svg/trash') %> 
+            Delete
+        </div>
+    </div>
+    <% } %> 
 </div>
+
+<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Confirm Fulfillment</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div>
+                <span class="label">Please indicate who fulfilled your posting:</span>
+                <%- include('../components/autocomplete',{ id:'fulfilled-user', options: users })%> 
+            </div>
+            <div>
+                <span class="label">Attach an image showing the fulfillment:</span>
+                <%- include('../components/button', {text: 'attach image', size: 'small', type: 'primary'}) %> 
+            </div>
+        </div>
+        <div class="modal-footer">
+            <%- include('../components/button', {text: 'cancel', size: 'small', type: 'grey', id: 'confirm-cancel'}) %> 
+            <%- include('../components/button', {text: 'confirm', size: 'small', type: 'secondary', id: 'confirm-post'}) %> 
+        </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#confirm-cancel').attr('data-bs-dismiss','modal');
+    $('#confirm-post').addClass('disabled');
+
+
+    const postId = "<%- postId %>";
+    $('#delete').click(() => {
+        $.ajax({
+            url: `/api/post?id=${postId}`,
+            type: 'DELETE',
+            success: function(result) {
+                window.location.reload();
+            },
+            error: (err) => {
+                console.error('Error in deleting post',err)
+            }
+        });
+    })
+   
+  
+</script>

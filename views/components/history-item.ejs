@@ -1,0 +1,65 @@
+<!-- category, username, name, title, fulfilled_by, fufilled_date, points, create_points -->
+<style>
+    .history-item {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin: 0 36px;
+        border-bottom: 1px solid var(--divider);
+        padding: 16px 0;
+    }
+    .history-item h4 {
+        font-size: 20px;
+        margin-bottom: 4px;
+    }
+    .history-row {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        color: var(--text-grey);
+        align-items: center;
+    }
+    .history-item .name {
+        color: var(--text-grey);
+        margin-bottom: 4px;
+    }
+    .history-item .name span {
+        color: var(--text-dark);
+    }
+    .history-item .points {
+        color: var(--text-primary);
+    }
+    .history-item .right {
+        height: fit-content;
+    }
+    .history-item .dot {
+        margin: 0 .3ch;
+    }
+</style>
+<div class="history-item">
+    <h4><%- title %></h4>
+    <div class="name">
+        <% if (currentUser === username) { %>
+            fulfilled by <span><%- getFieldFromUser(users,'name',fulfilled_by) %></span>
+        <% } else { %>
+            fulfilled for <span><%- name %> </span>
+        <% } %>
+    </div>
+    <div class="history-row">
+        <%- include('./chip', {category: category, text: category})  %>
+        <div class="right">
+            <span class="points">
+                <% if (currentUser === username) { %>
+                    <%- `${create_points > 0 ? '+' : ''}${create_points} points` %> 
+                <% } else { %>
+                    <%- `${points > 0 ? '+' : ''}${points} points` %> 
+                <% } %>
+            </span>
+            <span class="dot">•</span>
+            <%- `${dayjs(fufilled_date).format('M/D/YY')}` %> 
+        </div>
+    </div>
+    
+
+
+</div>

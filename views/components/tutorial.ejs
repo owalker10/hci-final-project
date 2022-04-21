@@ -1,7 +1,4 @@
 <style>
-    #tutorial {
-
-    }
     #tutorial .modal-footer {
         justify-content: space-between;
     }
@@ -32,7 +29,7 @@
         margin: 1rem;
         padding: 0;
     }
-    #tutorial .content-container {
+    #tutorial .modal-content-container {
         position: relative;
         display: flex;
         right: 0%;
@@ -86,7 +83,7 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="content-container">
+            <div class="modal-content-container">
                 <div class="content selected">
                     <p>ZipShare helps you connect with other people in your community to borrow items, give things away, and request favors.</p>
                     <p>You can earn <span style="font-weight:600;color:var(--text-primary);">points</span> by helping people out, and spend those points to create requests.</p>
@@ -167,7 +164,7 @@
         $('#tutorial .modal-title').removeClass('selected')
         $(`#tutorial .modal-title:nth-child(${tutorialPage+1})`).addClass('selected')
         // slide content
-        $('#tutorial .content-container').css({right: `${tutorialPage*100}%`})
+        $('#tutorial .modal-content-container').css({right: `${tutorialPage*100}%`})
         // toggle buttons
         if (tutorialPage === 0){
             $('#tutorial-back').css({display:'none'})

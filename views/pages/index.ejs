@@ -1,9 +1,3 @@
-<% 
-const getFieldFromUser = (field,username) => {
- return users.find(user => user.username === username)[field]
-}
-%> 
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -31,11 +25,16 @@ const getFieldFromUser = (field,username) => {
   <body>
     <%- include('../components/nav-bars', {page:'home',title:'ZipShare'}); %>
     <div class="content-container">
-      <div class="feed">
+      <div class="feed bottom-shadow">
         <h3>Active Posts</h3>
         <div class="post-list">
+          <% if (posts.length === 0) { %>
+           <div class="empty mt-4">
+              No active posts!
+           </div>
+          <% } %>
           <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
-            <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser('name',username), points, id }) %> 
+            <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points, id }) %> 
           <% }) %>
         </div>
       </div>
@@ -43,19 +42,10 @@ const getFieldFromUser = (field,username) => {
     <!-- request-details should slide open when someone clicks on a post card -->
     <div id="request-details" class="slide"></div>
     <script>
-      $('#press-me').click(() => {
-        $.post('/test', data => {
-          $('#request-details').html(data)
-          openSlide();
-          $('#test').click(() => {
-            closeSlide();
-          })
-        })
-      })
-
       $('.post-card').click(function() {
         $.post('/request-details', { id: $(this).attr('data-post-id') } ,data => {
           $('#request-details').html(data)
+          initTooltips();
           openSlide();
         })
       })

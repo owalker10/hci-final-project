@@ -31,6 +31,9 @@ JavaScript files that export data that can be used by the `npm run database` scr
 ### app.js
 The root file for the Express server. Most changes shouldn't be made here, but rather to web.js or api.js.
 
+### Changing users
+When using the client, you can assume the identity of any valid user (any user in the database) by adding ?username=[username] to the URL. The server will remember this username for the during of the session (aka the current browser tab).
+
 ## Database operation script
 You can use the command `npm run database` to perform operations on either the production or the development database.
 
