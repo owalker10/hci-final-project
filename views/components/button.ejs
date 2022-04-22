@@ -77,6 +77,6 @@
 </style>
 
 <button <%- locals.id ? `id="${locals.id}"` : '' %>  class="button <%- size %> <%- type %> <%- locals.disabled ? "disabled" : "" %>">
-    <img class="spinner" src="images/spinner.png">
+    <img class="spinner" src="<%- `images/spinner${type === 'secondary' ? '_primary' : ''}.png` %>">
     <%- text %> 
 </button>

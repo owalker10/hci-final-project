@@ -92,7 +92,7 @@ router.get('/profile', async (req, res, next) => {
     })
     .toArray()
   
-  history.sort((p1,p2) => p1.fulfilled_date - p2.fulfilled_date);
+  history.sort((p1,p2) => p2.fulfilled_date - p1.fulfilled_date);
 
   console.log(history)
 

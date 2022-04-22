@@ -96,13 +96,9 @@
               No active posts!
             </div>
           <% } %>
-          <% for( let index = 0; index < 10; index++ ) { %>
-          
-          
           <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
             <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points, id }) %> 
           <% }) %>
-          <% } %>
         </div>
         <div id="history" class="scrollable">
           <hr>
@@ -111,9 +107,9 @@
               You haven't completed any requests yet!
            </div>
           <% } %>
-          <% history.forEach(({ category, username, title, fulfilled_by, fufilled_date, points, create_points }) => { %>
+          <% history.forEach(({ category, username, title, fulfilled_by, fulfilled_date, points, create_points }) => { %>
             <!-- category, username, name, title, fulfilled_by, fufilled_date, points, create_points -->
-            <%- include('../components/history-item', { category, username, name: getFieldFromUser(users,'name',username), title, fulfilled_by, fufilled_date, points, create_points }) %> 
+            <%- include('../components/history-item', { category, username, name: getFieldFromUser(users,'name',username), title, fulfilled_by, fulfilled_date, points, create_points }) %> 
           <% }) %>
         </div>
       </div>

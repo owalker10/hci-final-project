@@ -92,6 +92,7 @@
 </style>
 
 <% const firstName = name.split(' ')[0]; %> 
+<% const otherUsers = users.filter(u => u.username !== currentUser) %> 
 
 <div class="details">
     <h3><%- title %> </h3>
@@ -144,11 +145,12 @@
         <div class="modal-body">
             <div>
                 <span class="label">Please indicate who fulfilled your posting:</span>
-                <%- include('../components/autocomplete',{ id:'fulfilled-user', options: users })%> 
+                <%- include('../components/autocomplete',{ id:'fulfilled-user', options: otherUsers })%> 
             </div>
             <div>
                 <span class="label">Attach an image showing the fulfillment:</span>
-                <%- include('../components/button', {text: 'attach image', size: 'small', type: 'primary'}) %> 
+                <input type="file" id="fulfill-image" accept="image/*">
+            </input>
             </div>
         </div>
         <div class="modal-footer">
@@ -160,6 +162,17 @@
 </div>
 
 <script>
+    const users = <%- JSON.stringify(users) %>;
+    const fulfillmentData = {};
+
+    const validate = (key,data) => {
+        fulfillmentData[key] = data;
+        if (fulfillmentData.user && fulfillmentData.image){
+            $('#confirm-post').removeClass('disabled');
+        }
+        else $('#confirm-post').addClass('disabled');
+    }
+
     $('#confirm-cancel').attr('data-bs-dismiss','modal');
     $('#confirm-post').addClass('disabled');
 
@@ -176,6 +189,29 @@
                 console.error('Error in deleting post',err)
             }
         });
+    })
+
+    $('#fulfilled-user input').blur(function(evt) {
+        const name = $(this).val();
+        const user = users.find(u => u.name === name);
+        validate('user',user);
+    })
+
+    $('#fulfill-image').change(function(evt){
+        const image = evt.target.files[0]
+        validate('image',image)
+    })
+
+    $('#confirm-post').click(() => {
+        $('#confirm-post').addClass('loading');
+        $.post('/api/post/fulfill', { id: postId, fulfillUser: fulfillmentData.user.username })
+        .then(() => {
+            window.location.reload();
+        })
+        .catch(err => {
+            console.error(err)
+            $('#confirm-post').removeClass('loading');
+        })
     })
    
   

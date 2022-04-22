@@ -1,4 +1,4 @@
-<!-- category, username, name, title, fulfilled_by, fufilled_date, points, create_points -->
+<!-- category, username, name, title, fulfilled_by, fulfilled_date, points, create_points -->
 <style>
     .history-item {
         display: flex;
@@ -56,7 +56,7 @@
                 <% } %>
             </span>
             <span class="dot">•</span>
-            <%- `${dayjs(fufilled_date).format('M/D/YY')}` %> 
+            <%- `${dayjs(fulfilled_date).format('M/D/YY')}` %> 
         </div>
     </div>
     
