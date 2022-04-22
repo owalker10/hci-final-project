@@ -107,7 +107,8 @@ a {
 .scrollable::after {
   /* .scrollable > *:last-child::after { */
   content: "";
-  height: calc(var(--nav-height) + 48px);
+  /* height: calc(var(--nav-height) + 48px); */
+  height: 300px;
   display: block;
   flex-shrink: 0;
 }
