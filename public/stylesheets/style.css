@@ -55,7 +55,6 @@ body {
   max-width: 100vw;
   min-height: 100vh;
   overflow: hidden;
-  padding-bottom: env(safe-area-inset-bottom,0px)
 }
 
 a {
@@ -107,8 +106,7 @@ a {
 .scrollable::after {
   /* .scrollable > *:last-child::after { */
   content: "";
-  /* height: calc(var(--nav-height) + 48px); */
-  height: 300px;
+  height: calc(var(--nav-height) + 48px + env(safe-area-inset-bottom,0px));
   display: block;
   flex-shrink: 0;
 }
