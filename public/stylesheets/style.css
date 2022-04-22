@@ -109,7 +109,7 @@ a {
 .scroll-spacer {
   /* .scrollable > *:last-child::after { */
   /* content: ""; */
-  height: calc(var(--nav-height) + 48px + var(--safe-area-inset-bottom));
+  height: calc(var(--nav-height) + 48px + 68px);
   display: block;
   flex-shrink: 0;
   position: relative;
