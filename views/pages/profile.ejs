@@ -29,7 +29,7 @@
       #tab-content > div {
         width: 100vw;
         flex-shrink: 0;
-        padding-bottom: calc(var(--nav-height) + 48px);
+        /* padding-bottom: calc(var(--nav-height) + 48px); */
         overflow-y: scroll;
       }
       #profile img {
@@ -90,17 +90,21 @@
       </div>
       <%- include('../components/profile-tabs'); %> 
       <div id="tab-content" class="bottom-shadow">
-        <div id="posts">
+        <div id="posts" class="scrollable">
           <% if (posts.length === 0) { %>
             <div class="empty">
               No active posts!
             </div>
           <% } %>
+          <% for( let index = 0; index < 10; index++ ) { %>
+          
+          
           <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
             <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points, id }) %> 
           <% }) %>
+          <% } %>
         </div>
-        <div id="history">
+        <div id="history" class="scrollable">
           <hr>
           <% if (history.length === 0) { %>
             <div class="empty mt-4">

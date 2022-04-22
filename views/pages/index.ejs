@@ -25,7 +25,7 @@
   <body>
     <%- include('../components/nav-bars', {page:'home',title:'ZipShare'}); %>
     <div class="content-container">
-      <div class="feed bottom-shadow">
+      <div class="feed bottom-shadow scrollable">
         <h3>Active Posts</h3>
         <div class="post-list">
           <% if (posts.length === 0) { %>
@@ -33,9 +33,13 @@
               No active posts!
            </div>
           <% } %>
+          <% for( let index = 0; index < 4; index++ ) { %>
+          
           <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
             <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points, id }) %> 
           <% }) %>
+          <% } %>
+
         </div>
       </div>
     </div>
