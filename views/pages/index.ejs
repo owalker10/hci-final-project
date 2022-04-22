@@ -20,6 +20,9 @@
         font-size: 26px;
         margin-bottom: 1rem;
       }
+      .bottom-shadow::before {
+        position: fixed;
+      }
     </style>
   </head>
   <body>
@@ -38,6 +41,8 @@
           <% }) %>
         </div>
       </div>
+      <div class="scroll-spacer"></div>
+
     </div>
     <!-- request-details should slide open when someone clicks on a post card -->
     <div id="request-details" class="slide"></div>

@@ -99,6 +99,7 @@
           <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
             <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points, id }) %> 
           <% }) %>
+          <div class="scroll-spacer"></div>
         </div>
         <div id="history" class="scrollable">
           <hr>
@@ -111,6 +112,7 @@
             <!-- category, username, name, title, fulfilled_by, fufilled_date, points, create_points -->
             <%- include('../components/history-item', { category, username, name: getFieldFromUser(users,'name',username), title, fulfilled_by, fulfilled_date, points, create_points }) %> 
           <% }) %>
+          <div class="scroll-spacer"></div>
         </div>
       </div>
     </div>

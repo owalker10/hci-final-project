@@ -105,10 +105,12 @@ a {
   text-align: center;
 }
 
-.scrollable::after {
+/* .scrollable::after { */
+.scroll-spacer {
   /* .scrollable > *:last-child::after { */
-  content: "";
+  /* content: ""; */
   height: calc(var(--nav-height) + 48px + var(--safe-area-inset-bottom));
   display: block;
   flex-shrink: 0;
+  position: relative;
 }
