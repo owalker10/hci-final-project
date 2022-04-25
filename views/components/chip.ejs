@@ -59,8 +59,7 @@
     const time = text;
     if (typeof(time) === 'string') return time;
     else {
-        const offset = new Date().getTimezoneOffset();
-        const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
+        const nowDays = new Date().setHours(0,0,0,0);
         const daysAway = (time - nowDays)/(1000 * 3600 * 24)
         if (daysAway < 1) {
             return "today"

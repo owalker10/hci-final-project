@@ -140,9 +140,7 @@
     // convert a date in milliseconds to the text of a date chip
     const msToText = (time) => {
         const msInDays = 1000 * 3600 * 24;
-        const offset = new Date().getTimezoneOffset();
-        const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
-        const daysAway = (time - nowDays)/(1000 * 3600 * 24)
+        const nowDays = new Date().setHours(0,0,0,0);
         if (daysAway < 1) {
             return "today"
         }

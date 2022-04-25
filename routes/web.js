@@ -39,8 +39,7 @@ router.use(parseUsername)
 // Renders the homepage
 router.get('/', async (req, res, next) => {
   const db = dbService.getDb();
-  const offset = new Date().getTimezoneOffset();
-  const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
+  const nowDays = new Date().setHours(0,0,0,0);
   // feed is all posts not created by current user with most recent first
   // additionally, requests with expired "need_by" dates are excluded
   const feed = await db.collection("posts")
@@ -67,8 +66,7 @@ router.get('/profile', async (req, res, next) => {
 
   const user = await db.collection('users').findOne({ username: req.session.username });
 
-  const offset = new Date().getTimezoneOffset();
-  const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
+  const nowDays = new Date().setHours(0,0,0,0);
   const posts = await db.collection("posts")
     .find({
       username: req.session.username,
