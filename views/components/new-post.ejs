@@ -1,6 +1,7 @@
 <style type="text/css">
     #drawer {
         height: 75vh;
+        min-height: min(650px,100%);
         border-top-left-radius: 16px;
         border-top-right-radius: 16px;
         padding: 24px 32px 0;
@@ -36,6 +37,12 @@
     }
     #new-post-form .section-label {
         margin-top: 24px;
+    }
+    #new-post-form .chip[data-for='category'] {
+        margin-bottom: 5px;
+    }
+    #new-post-form .categories {
+        margin-bottom: -5px;
     }
     #new-post-form .form-switch {
         margin-top: 4px;
@@ -147,8 +154,8 @@
         else return `by ${$.datepicker.formatDate('DD',new Date(time))}`
     }
 
-    const categoryChips = $(".chip[data-for='category'");
-    const timeChips = $(".chip[data-for='need-by'");
+    const categoryChips = $(".chip[data-for='category']");
+    const timeChips = $(".chip[data-for='need-by']");
     const datepickerText = $('#new-post-day span');
 
     $('#create-post').addClass('disabled');
