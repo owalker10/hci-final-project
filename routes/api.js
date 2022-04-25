@@ -48,7 +48,7 @@ router.post('/post/fulfill', async function (req, res, next){
 
   try {
     const { points, create_points } = await db.collection('posts')
-      .find({ id });
+      .findOne({ id });
 
     // modify post creator's points
     await db.collection('users')
