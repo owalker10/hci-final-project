@@ -141,6 +141,7 @@
     const msToText = (time) => {
         const msInDays = 1000 * 3600 * 24;
         const nowDays = new Date().setHours(0,0,0,0);
+        const daysAway = (time - nowDays)/(1000 * 3600 * 24)
         if (daysAway < 1) {
             return "today"
         }
