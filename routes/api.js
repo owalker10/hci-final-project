@@ -43,8 +43,6 @@ router.delete('/post', function(req, res, next) {
 router.post('/post/fulfill', async function (req, res, next){
   const db = dbService.getDb();
   const { id, fulfillUser, username } = req.body;
-  const offset = new Date().getTimezoneOffset();
-  const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
 
   try {
     const { points, create_points } = await db.collection('posts')
@@ -66,7 +64,7 @@ router.post('/post/fulfill', async function (req, res, next){
     await db.collection('posts')
       .updateOne({ id }, { $set: { 
         fulfilled_by: fulfillUser,
-        fulfilled_date: nowDays,
+        fulfilled_date: Date.now(),
       }
     })
     res.sendStatus(200);
