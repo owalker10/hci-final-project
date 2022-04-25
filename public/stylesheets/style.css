@@ -69,7 +69,7 @@ a {
 .slide {
   position: absolute;
   top: 0;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   background-color: white;
   left: 100vw;
