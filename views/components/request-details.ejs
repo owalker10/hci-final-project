@@ -245,6 +245,11 @@
             $('#confirm-post').removeClass('loading');
         })
     })
+
+    $('input, textarea').on('blur', () => {
+        console.log('eee')
+        $(window).scrollTop(0);
+    })
     
   
 </script>

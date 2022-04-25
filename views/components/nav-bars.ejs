@@ -181,5 +181,8 @@
         })
     }
 
-    const loaded = {};
+    $('input').on('blur', () => {
+        console.log('eee')
+        $(window).scrollTop(0);
+    })
 </script>
