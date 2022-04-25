@@ -237,7 +237,7 @@
 
     $('#confirm-post').click(() => {
         $('#confirm-post').addClass('loading');
-        $.post('/api/post/fulfill', { id: postId, fulfillUser: fulfillmentData.user.username })
+        $.post('/api/post/fulfill', { id: postId, fulfillUser: fulfillmentData.user.username, username: fulfillmentData.username  })
         .then(() => {
             window.location.reload();
         })
@@ -248,8 +248,8 @@
     })
 
     $('input, textarea').on('blur', () => {
-        console.log('eee')
         $(window).scrollTop(0);
+        $(window).scrollLeft(0);
     })
     
   

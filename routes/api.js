@@ -43,6 +43,7 @@ router.delete('/post', function(req, res, next) {
 router.post('/post/fulfill', async function (req, res, next){
   const db = dbService.getDb();
   const { id, fulfillUser, username } = req.body;
+  console.log(username)
 
   try {
     const { points, create_points } = await db.collection('posts')
@@ -50,14 +51,14 @@ router.post('/post/fulfill', async function (req, res, next){
 
     // modify post creator's points
     await db.collection('users')
-      .updateOne({ username }, {
+      .updateOne({ username: username }, {
         $inc: { points: create_points }
     });
 
     // modify fulfilling user's points
     await db.collection('users')
-      .updateOne({ fulfillUser }, {
-        $inc: { points }
+      .updateOne({ username: fulfillUser }, {
+        $inc: { points: points }
     });
     
     // mark post as fulfilled

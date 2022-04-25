@@ -94,7 +94,6 @@ router.get('/profile', async (req, res, next) => {
   
   history.sort((p1,p2) => p2.fulfilled_date - p1.fulfilled_date);
 
-  console.log(history)
 
   const users = await db.collection("users").find({}).toArray()
 
