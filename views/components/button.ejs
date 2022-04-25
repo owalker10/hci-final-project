@@ -75,8 +75,15 @@
     to { transform: rotate(360deg);  }
 }
 </style>
+<% const attr = locals.attr ?? {} %> 
 
-<button <%- locals.id ? `id="${locals.id}"` : '' %>  class="button <%- size %> <%- type %> <%- locals.disabled ? "disabled" : "" %>">
+<button
+    <%- locals.id ? `id="${locals.id}"` : '' %> 
+    class="button <%- size %> <%- type %> <%- locals.disabled ? "disabled" : "" %>"
+    <% Object.entries(attr).forEach(([key,val])  => { %>
+        <%- `${key}="${val}"` %> 
+    <% }) %>
+>
     <img class="spinner" src="<%- `images/spinner${type === 'secondary' ? '_primary' : ''}.png` %>">
     <%- text %> 
 </button>

@@ -74,10 +74,10 @@
 
     /* confirm modal */
 
-    #confirmModal .modal-header, #confirmModal .modal-footer {
+    #confirmModal .modal-header, #confirmModal .modal-footer, #deleteModal .modal-header, #deleteModal .modal-footer {
         border: none!important;
     }
-    #confirmModal .btn-close {
+    #confirmModal .btn-close, #deleteModal .btn-close {
         opacity: .2;
     }
     #confirmModal .label {
@@ -92,21 +92,27 @@
 </style>
 
 <% const firstName = name.split(' ')[0]; %> 
+<% const displayPoints = currentUser === username ? create_points : points %> 
 <% const otherUsers = users.filter(u => u.username !== currentUser) %> 
 
 <div class="details">
-    <h3><%- title %> </h3>
-    <div class="points"><span><%- `${points > 0 ? '+' : ''}${points}`%> points</span> for fulfilling</div>
+    <h3><%= title %> </h3>
+    <div class="points"><span><%- `${displayPoints > 0 ? '+' : ''}${displayPoints}`%> points</span>
+        <%- currentUser === username ? 'when fulfilled' : 'for fulfilling' %>
+    </div>
     <div class="user">
         <img src="<%- image %>">
         <span><%- name %></span>
+        <% if (currentUser === username) { %>
+            <span style="font-weight: 300;">(you)</span>
+        <% } %>
     </div>
     <div class="d-flex flex-wrap mt-2 chips">
         <%- include('./chip', {category, text: category}); %>
         <%- include('./chip', {category: 'time', text: need_by}); %>
     </div>
     <hr>
-    <div class="description"><%- description %> </div>
+    <div class="description"><%= description %> </div>
     <% if (locals.currentUser !== username) { %> 
         <div class="contact">
             <a href="sms:5555555555">
@@ -127,7 +133,7 @@
             <%- include('../svg/pencil') %> 
             Edit
         </div>
-        <div class="action" id="delete">
+        <div class="action" id="delete" data-bs-toggle="modal" data-bs-target="#deleteModal">
             <%- include('../svg/trash') %> 
             Delete
         </div>
@@ -135,11 +141,12 @@
     <% } %> 
 </div>
 
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Confirm Fulfillment Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1">
     <div class="modal-dialog  modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Confirm Fulfillment</h5>
+            <h5 class="modal-title">Confirm Fulfillment</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -161,11 +168,32 @@
     </div>
 </div>
 
-<script>
-    const users = <%- JSON.stringify(users) %>;
-    const fulfillmentData = {};
+<!-- Delete Post modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog  modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Delete Post</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            Are you sure you want to delete this post?
+        </div>
+        <div class="modal-footer">
+            <%- include('../components/button', {text: 'cancel', size: 'small', type: 'grey', id: 'delete-cancel'}) %> 
+            <%- include('../components/button', {text: 'delete', size: 'small', type: 'secondary', id: 'delete-post'}) %> 
+        </div>
+        </div>
+    </div>
+</div>
 
-    const validate = (key,data) => {
+<script>
+    var users = <%- JSON.stringify(users) %>;
+    var fulfillmentData = {
+        username: "<%- currentUser %>",
+    };
+
+    var validateFulfillment = (key,data) => {
         fulfillmentData[key] = data;
         if (fulfillmentData.user && fulfillmentData.image){
             $('#confirm-post').removeClass('disabled');
@@ -174,11 +202,13 @@
     }
 
     $('#confirm-cancel').attr('data-bs-dismiss','modal');
+    $('#delete-cancel').attr('data-bs-dismiss','modal');
     $('#confirm-post').addClass('disabled');
 
 
-    const postId = "<%- postId %>";
-    $('#delete').click(() => {
+    var postId = "<%- postId %>";
+    $('#delete-post').click(() => {
+        $('#delete-post').addClass('loading');
         $.ajax({
             url: `/api/post?id=${postId}`,
             type: 'DELETE',
@@ -186,7 +216,9 @@
                 window.location.reload();
             },
             error: (err) => {
-                console.error('Error in deleting post',err)
+                console.error('Error in deleting post',err);
+                $('#delete-post').removeClass('loading');
+
             }
         });
     })
@@ -194,12 +226,12 @@
     $('#fulfilled-user input').blur(function(evt) {
         const name = $(this).val();
         const user = users.find(u => u.name === name);
-        validate('user',user);
+        validateFulfillment('user',user);
     })
 
     $('#fulfill-image').change(function(evt){
         const image = evt.target.files[0]
-        validate('image',image)
+        validateFulfillment('image',image)
     })
 
     $('#confirm-post').click(() => {
@@ -213,6 +245,6 @@
             $('#confirm-post').removeClass('loading');
         })
     })
-   
+    
   
 </script>

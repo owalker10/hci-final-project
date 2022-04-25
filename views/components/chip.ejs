@@ -6,7 +6,7 @@
         padding: 6px 13px;
         font-size: 11px;
         font-weight: 600;
-
+        transition: all .1s ease;
     }
     .chip.borrow {
         border-color: var(--borrow-color);
@@ -47,15 +47,20 @@
         background: none;
         border-color: var(--unselected-chip-color);
     }
+    /* .chip.selectable:active {
+        background-color: rgba(0,0,0,.05);
+        filter: brightness(0.8);
+    } */
 </style>
 
 <% const getText = () => {
     const msInDays = 1000 * 3600 * 24;
     if (category !== 'time') return text;
     const time = text;
-    if (time === 'ASAP' || time === 'anytime') return time;
+    if (typeof(time) === 'string') return time;
     else {
-        const nowDays = Math.floor(Date.now()/msInDays)*msInDays
+        const offset = new Date().getTimezoneOffset();
+        const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
         const daysAway = (time - nowDays)/(1000 * 3600 * 24)
         if (daysAway < 1) {
             return "today"
@@ -67,12 +72,20 @@
     }
 } %> 
 
-<div class="chip <%-category%> <%- locals.unselected ? 'unselected' : '' %>">
+<% const attr = locals.attr ?? {} %> 
+
+<div
+    class="chip <%-category%> <%- locals.selectable ? 'unselected selectable' : '' %>"
+    <% Object.entries(attr).forEach(([key,val]) => { %>
+        <%- ` ${key}="${val}" ` %> 
+    <% }) %>
+
+>
     <!-- icon -->
     <%- category == 'keep' || category == 'borrow' ? include('../svg/borrow')
     : category == 'giveaway' ? include('../svg/giveaway')
     : category == 'favor' ? include('../svg/favor')
     : include('../svg/time') %>
-    <%- getText() %>
+    <span><%- getText() %></span>
 
 </div>

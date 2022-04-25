@@ -87,7 +87,6 @@ a {
   display: flex;
   flex-direction: column;
   padding-top: var(--header-height);
-  /* padding-bottom: calc(var(--nav-height) + 48px); */
 }
 
 .bottom-shadow {
@@ -112,7 +111,7 @@ a {
 .scroll-spacer {
   /* .scrollable > *:last-child::after { */
   /* content: ""; */
-  height: calc(var(--nav-height) + 48px + 68px);
+  height: calc(var(--nav-height) + 64px);
   display: block;
   flex-shrink: 0;
   position: relative;

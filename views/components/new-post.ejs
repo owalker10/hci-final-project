@@ -14,6 +14,70 @@
         bottom: 24px;
         right: 32px;
     }
+    #post-title {
+        font-size: 36px;
+        border: none;
+        border-bottom: 1px solid var(--grey);
+        outline: none!important;
+        font-weight: 300;
+    }
+    #post-title + .highlight{
+        height: 2px;
+        width: 0;
+        background-color: var(--primary);
+        transition: all .3s ease;
+        margin-top: -1px;
+    }
+    #post-title:focus + .highlight{
+        width: 100%;
+    }
+    #new-post-form .section-label {
+        margin-top: 24px;
+    }
+    #new-post-form .form-switch {
+        margin-top: 4px;
+        display: flex;
+        align-items: center;
+        column-gap: 8px;
+    }
+    #new-post-form .form-check-input{
+        width: 44px;
+        height: 24px;
+    }
+    #new-post-form .form-check-input:checked {
+        background-color: var(--primary);
+        border-color: var(--primary);
+    }
+    #new-post-form .form-switch .form-check-input:focus {
+        box-shadow: none;
+        /* background-image: initial; */
+    }
+    #new-post-form .form-switch .form-check-input + label {
+        color: var(--text-grey);
+        margin-top: 2px;
+    }
+    #new-post-form .form-switch .form-check-input:focus + label {
+        color: var(--text-dark);
+    }
+    #new-post-form .description-subtitle {
+        color: var(--text-grey);
+    }
+    #new-post-form #description {
+        outline: none!important;
+        border: 1px solid var(--grey);
+        border-radius: 8px;
+        margin-top: 8px;
+        padding: 8px 12px;
+        resize: none;
+    }
+    #datepicker {
+        width: 0;
+        height: 0;
+        border: none;
+        padding: 0;
+    }
+
+
 </style>
 
 <div class="offcanvas offcanvas-bottom" tabindex="-1" id="drawer">
@@ -21,5 +85,121 @@
         <h3>New Post</h3>
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
-    <%- include('./button', { type: 'primary', size: 'large', text: 'post'}) %> 
-  </div>
+    <div id="new-post-form" class="d-flex flex-column mt-4">
+        <input id="post-title" placeholder="Title">
+        <div class="highlight"></div>
+        <h4 class="section-label">Category</h4>
+        <div class="categories">
+            <% ['borrow','keep','favor','giveaway'].map(category => { %>
+                <%- include('./chip', {category: category, text: category, selectable: true, attr: { id: `new-post-${category}`, 'data-category':category, 'data-for':'category' }}) %> 
+            <% }) %> 
+        </div>
+        <h4 class="section-label">Need By</h4>
+        <div class="need-by">
+            <% [['ASAP','ASAP'],['anytime','anytime'],['select a day...','day']].map(([text,id]) => { %>
+                <%- include('./chip', {category: 'time', text, selectable: true, attr: { id: `new-post-${id}`, 'data-category':id, 'data-for':'need-by' }}) %> 
+            <% }) %> 
+            <input type="text" id="datepicker">
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" id="realTime">
+            <label class="form-check-label" for="realTime">
+                spend <b>20 points</b> to notify everyone in real time
+            </label>
+          </div>
+        <h4 class="section-label">Description</h4>
+        <div class="description-subtitle">Be specific about your item or request. If you need to borrow something, when will you return it?</div>
+        <textarea id="description" rows="3"></textarea>
+
+    </div>
+    <%- include('./button', { type: 'primary', size: 'large', text: 'post', id: 'create-post'}) %> 
+</div>
+
+<script>
+    const formData = {
+        title: undefined,
+        category: undefined,
+        need_by: undefined,
+        realTime: false,
+        description: undefined,
+        username: "<%- currentUser %>",
+    };
+    const validatePost = (key, data) => {
+        formData[key] = data;
+        if (formData.title && formData.category && formData.need_by && formData.description && formData.username) $('#create-post').removeClass('disabled');
+        else $('#create-post').addClass('disabled');
+    }
+    // convert a date in milliseconds to the text of a date chip
+    const msToText = (time) => {
+        const msInDays = 1000 * 3600 * 24;
+        const offset = new Date().getTimezoneOffset();
+        const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
+        const daysAway = (time - nowDays)/(1000 * 3600 * 24)
+        if (daysAway < 1) {
+            return "today"
+        }
+        else if (daysAway > 7){
+            return `by ${$.datepicker.formatDate('M d',new Date(time))}`
+        }
+        else return `by ${$.datepicker.formatDate('DD',new Date(time))}`
+    }
+
+    const categoryChips = $(".chip[data-for='category'");
+    const timeChips = $(".chip[data-for='need-by'");
+    const datepickerText = $('#new-post-day span');
+
+    $('#create-post').addClass('disabled');
+
+    $(function() {
+        $("#datepicker").datepicker({
+            minDate: 0,
+            onSelect: function(dateText){
+                const time = msToText(new Date(dateText).getTime())
+                $('#new-post-day span').text(time);
+                timeChips.addClass('unselected');
+                $('#new-post-day').removeClass('unselected');
+                validatePost('need_by',time);
+            }
+        });
+    } );
+    $('#new-post-day').click(() => {
+        $('#datepicker').datepicker("show")
+    })
+
+    $('#post-title').on('input', function(e){
+        validatePost('title',$(this).val());
+    })
+    categoryChips.click(function(e){
+        categoryChips.addClass('unselected');
+        $(this).removeClass('unselected');
+        validatePost('category',$(this).attr('data-category'))
+    })
+    timeChips.click(function(e){
+        const chip = $(this);
+        if (chip.attr('id') !== 'new-post-day'){
+            timeChips.addClass('unselected');
+            chip.removeClass('unselected');
+            datepickerText.text('select a day...');
+            validatePost('need_by',chip.attr('data-category'));
+        }
+    });
+    $('#realTime').change(function(e){
+        validatePost('realTime',$(this).prop('checked'));
+    })
+    $('#description').on('input', function(e){
+        validatePost('description',$(this).val());
+    })
+
+    $('#create-post').click(() => {
+        $('#create-post').addClass('loading');
+        $.post('/api/post', formData)
+        .then(() => {
+            window.location.reload();
+        })
+        .catch(err => {
+            console.error(err)
+            $('#create-post').removeClass('loading');
+        })
+    })
+
+</script>

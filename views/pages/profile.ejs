@@ -96,8 +96,8 @@
               No active posts!
             </div>
           <% } %>
-          <% posts.forEach(({ category, created, description, id, need_by, title, username, points }) => { %>
-            <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points, id }) %> 
+          <% posts.forEach(({ category, created, description, id, need_by, title, username, create_points }) => { %>
+            <%- include('../components/post-card', {title, category, need_by, name: getFieldFromUser(users,'name',username), points: create_points, id }) %> 
           <% }) %>
           <div class="scroll-spacer"></div>
         </div>

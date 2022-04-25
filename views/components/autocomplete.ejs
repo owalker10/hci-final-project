@@ -61,8 +61,8 @@
 
 <script>
     // jquery ui menu
-    const id = "<%- id %>";
-    const options = <%- JSON.stringify(options) %>;
+    var id = "<%- id %>";
+    var options = <%- JSON.stringify(options) %>;
     $(`#${id} .menu`).menu({
         classes: {
             "ui-menu": "menu",
@@ -93,5 +93,6 @@
             $(`#${id} input`).blur()
         })
     })
+    
 
 </script>

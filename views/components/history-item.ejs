@@ -37,7 +37,7 @@
     }
 </style>
 <div class="history-item">
-    <h4><%- title %></h4>
+    <h4><%= title %></h4>
     <div class="name">
         <% if (currentUser === username) { %>
             fulfilled by <span><%- getFieldFromUser(users,'name',fulfilled_by) %></span>

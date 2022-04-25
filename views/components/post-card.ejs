@@ -33,7 +33,7 @@
  <div class="post-card" data-post-id="<%- id %>">
     <h4><%- title %> </h4>
     <div class="d-flex justify-content-between">
-        <span class="name"><%- name %></span>
+        <span class="name"><%= name %></span>
         <span class="points"><%- `${points > 0 ? '+' : ''}${points} points` %></span>
     </div>
     <div class="d-flex flex-wrap mt-2">

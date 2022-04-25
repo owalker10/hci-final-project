@@ -39,7 +39,8 @@ router.use(parseUsername)
 // Renders the homepage
 router.get('/', async (req, res, next) => {
   const db = dbService.getDb();
-  const nowDays = Math.floor(Date.now()/msInDays)*msInDays;
+  const offset = new Date().getTimezoneOffset();
+  const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
   // feed is all posts not created by current user with most recent first
   // additionally, requests with expired "need_by" dates are excluded
   const feed = await db.collection("posts")
@@ -66,7 +67,8 @@ router.get('/profile', async (req, res, next) => {
 
   const user = await db.collection('users').findOne({ username: req.session.username });
 
-  const nowDays = Math.floor(Date.now()/msInDays)*msInDays;
+  const offset = new Date().getTimezoneOffset();
+  const nowDays = Math.floor(Date.now()/msInDays)*msInDays + offset*60*1000;
   const posts = await db.collection("posts")
     .find({
       username: req.session.username,
@@ -112,9 +114,9 @@ router.post('/request-details', async function(req, res, next) {
   const post = await db.collection('posts').findOne({ id: req.body.id })
   const users = await db.collection('users').find({}).toArray();
   const user = await db.collection('users').findOne({ username: post.username })
-  res.render('components/request-details', { title: post.title, points: post.points, image: user.image,
-    name: user.name, category: post.category, need_by: post.need_by, description: post.description,
-    username: post.username, postId: post.id, users });
+  res.render('components/request-details', { title: post.title, points: post.points, create_points: post.create_points,
+    image: user.image, name: user.name, category: post.category, need_by: post.need_by,
+    description: post.description, username: post.username, postId: post.id, users });
 });
 
 
